@@ -7,7 +7,7 @@ The original idea is explained in [this issue](https://github.com/SimpleBus/Symf
 
 [![Total Downloads](https://poser.pugx.org/pugx/bus-form-bundle/downloads.png)](https://packagist.org/packages/pugx/bus-form-bundle)
 [![Build Status](https://secure.travis-ci.org/PUGX/PUGXBusFormBundle.png?branch=master)](http://travis-ci.org/PUGX/PUGXBusFormBundle)
-[![Test Coverage](https://codeclimate.com/github/PUGX/bus-form-bundle/badges/coverage.svg)](https://codeclimate.com/github/PUGX/bus-form-bundle/coverage)
+[![Test Coverage](https://codeclimate.com/github/PUGX/PUGXBusFormBundle/badges/coverage.svg)](https://codeclimate.com/github/PUGX/PUGXBusFormBundle/coverage)
 
 Documentation
 -------------
