@@ -5,6 +5,10 @@ This bundle provides an abstract form to automatically handle commands in Simple
 
 The original idea is explained in [this issue](https://github.com/SimpleBus/SymfonyBridge/issues/38#issuecomment-264205865).
 
+[![Total Downloads](https://poser.pugx.org/pugx/bus-form-bundle/downloads.png)](https://packagist.org/packages/pugx/bus-form-bundle)
+[![Build Status](https://secure.travis-ci.org/PUGX/PUGXBusFormBundle.png?branch=master)](http://travis-ci.org/PUGX/PUGXBusFormBundle)
+[![Test Coverage](https://codeclimate.com/github/PUGX/bus-form-bundle/badges/coverage.svg)](https://codeclimate.com/github/PUGX/bus-form-bundle/coverage)
+
 Documentation
 -------------
 
