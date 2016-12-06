@@ -3,9 +3,8 @@
 namespace PUGX\BusFormBundle\Tests\Form\Type;
 
 use PUGX\BusFormBundle\Tests\BusFormTypeStub;
-use Symfony\Component\Form\Test\TypeTestCase;
 
-class AbstractBusTypeTest extends TypeTestCase
+class AbstractBusTypeTest extends \PHPUnit_Framework_TestCase
 {
     public function testBuildForm()
     {
