@@ -122,3 +122,8 @@ class FooController  extends Controller
 }
 
 ```
+
+Also, if your handler is throwing a DomainException, such exception is caught and transformed
+into a form error.
+
+
