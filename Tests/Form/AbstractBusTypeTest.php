@@ -2,9 +2,10 @@
 
 namespace PUGX\BusFormBundle\Tests\Form\Type;
 
+use PHPUnit\Framework\TestCase;
 use PUGX\BusFormBundle\Tests\BusFormTypeStub;
 
-class AbstractBusTypeTest extends \PHPUnit_Framework_TestCase
+class AbstractBusTypeTest extends TestCase
 {
     public function testBuildForm()
     {
