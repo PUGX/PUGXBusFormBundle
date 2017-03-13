@@ -1,7 +1,7 @@
 PUGXBusFormBundle
 =================
 
-This bundle provides an abstract form to automatically handle commands in SimpleBus.
+This bundle provides a mechanism to automatically handle commands in forms with SimpleBus.
 
 The original idea is explained in [this issue](https://github.com/SimpleBus/SymfonyBridge/issues/38#issuecomment-264205865).
 

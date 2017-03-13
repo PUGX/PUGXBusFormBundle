@@ -29,7 +29,7 @@ public function registerBundles()
 
 ## 3. Usage
 
-In your forms that are abound to a Command, extends bundle's form instead of Symfony one.
+In your forms that are bound to a Command, extends bundle's form instead of Symfony one.
 
 Example:
 
@@ -123,7 +123,49 @@ class FooController  extends Controller
 
 ```
 
-Also, if your handler is throwing a DomainException, such exception is caught and transformed
+Also, if your handler is throwing a `\DomainException`, such exception is caught and transformed
 into a form error.
 
 
+## 4. Direct use
+
+Sometimes it happens that your command is not bound to a form, but you want to use a form anyway to handle it.
+Usually, you would build an anonymous form directly in your controller. With this bundle, you can instead
+use `BusType`. Of course, this case can be applied only when your command is not needing any dynamic value to be
+assigned.
+
+You need to declare `BusType` as a service (only once):
+
+```yaml
+# app/config/services.yml
+
+    app.form.baz:
+        class: PUGX\BusFormBundle\Form\BusType
+        arguments: ['@command_bus']
+        tags:
+            - { name: form.type }
+
+```
+Then, in your controller, you can do something like the following:
+
+```php
+<?php
+
+use PUGX\BusFormBundle\Form\BusType;
+use MyDomain\Command\DoSomethingCommand;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+class FooController  extends Controller
+{
+    public function doSomethingAction()
+    {
+        $form = $this->createForm(BusType::class, new DoSomethingCommand());
+        if ($form->handleRequest($request)->isValid()) {
+            return $this->redirectToRoute('some_route');
+        }
+
+        return $this->render('do/something.html.twig', ['form' => $form->createView()]);
+    }
+}
+
+```
