@@ -2,7 +2,7 @@
 
 namespace PUGX\BusFormBundle\Form;
 
-use SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware as Bus;
+use SimpleBus\Message\Bus\MessageBus as Bus;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
