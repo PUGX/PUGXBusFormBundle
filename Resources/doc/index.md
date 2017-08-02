@@ -38,10 +38,10 @@ Example:
 
 namespace AppBundle\Form;
 
+use MyDomain\Command\DoSomethingCommand;
 use PUGX\BusFormBundle\AbstractBusType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use MyDomain\Command\DoSomethingCommand;
 
 class FooType extends AbstractBusType
 {
@@ -99,7 +99,7 @@ class FooController  extends Controller
     public function doSomethingAction()
     {
         $form = $this->createForm(FooType::class, new DoSomethingCommand());
-        if ($form->handleRequest($request)->isValid()) {
+        if ($form->handleRequest($request)->isSubmitted() && $form->isValid()) {
             $this->get('command_bus')->handle($command);
 
             return $this->redirectToRoute('some_route');
@@ -112,7 +112,7 @@ class FooController  extends Controller
     public function doSomethingAction()
     {
         $form = $this->createForm(FooType::class, new DoSomethingCommand());
-        if ($form->handleRequest($request)->isValid()) {
+        if ($form->handleRequest($request)->isSubmitted() && $form->isValid()) {
             // look ma, no command handling needed!
             return $this->redirectToRoute('some_route');
         }
@@ -160,7 +160,7 @@ class FooController  extends Controller
     public function doSomethingAction()
     {
         $form = $this->createForm(BusType::class, new DoSomethingCommand());
-        if ($form->handleRequest($request)->isValid()) {
+        if ($form->handleRequest($request)->isSubmitted() && $form->isValid()) {
             return $this->redirectToRoute('some_route');
         }
 
