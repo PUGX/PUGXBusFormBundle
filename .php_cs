@@ -2,7 +2,7 @@
 // see https://github.com/FriendsOfPHP/PHP-CS-Fixer
 
 $finder = PhpCsFixer\Finder::create()
-    ->in([__DIR__.'/DependencyInjection', __DIR__.'/Form', __DIR__.'/Tests'])
+    ->in([__DIR__.'/Form', __DIR__.'/Tests'])
 ;
 
 return PhpCsFixer\Config::create()
