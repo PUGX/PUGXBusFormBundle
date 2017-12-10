@@ -11,7 +11,7 @@ You likey want to install [SymfonyBridge](https://github.com/SimpleBus/SymfonyBr
 
 ## 2. Configuration
 
-Enable the bundle in the kernel:
+If you don't use Flex, you'll need to enable the bundle in the kernel:
 
 ``` php
 <?php
@@ -36,7 +36,7 @@ Example:
 ```php
 <?php
 
-namespace AppBundle\Form;
+namespace App\Form;
 
 use MyDomain\Command\DoSomethingCommand;
 use PUGX\BusFormBundle\AbstractBusType;
@@ -45,9 +45,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FooType extends AbstractBusType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
@@ -57,9 +54,6 @@ class FooType extends AbstractBusType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -69,17 +63,15 @@ class FooType extends AbstractBusType
 }
 ```
 
-You need to declare your form as a service, injecting the `command_bus` service.
+If you don't use autowiring, you'll need to declare your form as a service, injecting the `command_bus` service.
 
 ```yaml
 # app/config/services.yml
 
     app.form.foo:
-        class: AppBundle\Form\FooType
+        class: App\Form\FooType
         arguments: ['@command_bus']
-        tags:
-            - { name: form.type }
-
+        tags: [form.type]
 ```
 
 Now, your controller doesn't need to handle the Command any more. The Command is handled by the form.
@@ -89,11 +81,11 @@ Example:
 ```php
 <?php
 
-use AppBundle\Form\FooType;
+use App\Form\FooType;
 use MyDomain\Command\DoSomethingCommand;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class FooController  extends Controller
+class FooController extends Controller
 {
     // before
     public function doSomethingAction()
@@ -134,7 +126,7 @@ Usually, you would build an anonymous form directly in your controller. With thi
 use `BusType`. Of course, this case can be applied only when your command is not needing any dynamic value to be
 assigned.
 
-You need to declare `BusType` as a service (only once):
+If you don't use autowiring, you'll need to declare `BusType` as a service (only once):
 
 ```yaml
 # app/config/services.yml
@@ -142,9 +134,7 @@ You need to declare `BusType` as a service (only once):
     app.form.baz:
         class: PUGX\BusFormBundle\Form\BusType
         arguments: ['@command_bus']
-        tags:
-            - { name: form.type }
-
+        tags: [form.type]
 ```
 Then, in your controller, you can do something like the following:
 
@@ -155,7 +145,7 @@ use PUGX\BusFormBundle\Form\BusType;
 use MyDomain\Command\DoSomethingCommand;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class FooController  extends Controller
+class FooController extends Controller
 {
     public function doSomethingAction()
     {

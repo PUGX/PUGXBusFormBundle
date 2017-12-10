@@ -12,12 +12,12 @@ The original idea is explained in [this issue](https://github.com/SimpleBus/Symf
 Documentation
 -------------
 
-[Read the documentation](https://github.com/PUGX/PUGXBusFormBundle/tree/master/Resources/doc/index.md)
+[Read the documentation](https://github.com/PUGX/PUGXBusFormBundle/tree/master/docs/index.md)
 
 Installation
 ------------
 
-All the installation instructions are located in [documentation](https://github.com/PUGX/PUGXBusFormBundle/tree/master/Resources/doc/index.md).
+All the installation instructions are located in [documentation](https://github.com/PUGX/PUGXBusFormBundle/tree/master/docs/index.md).
 
 License
 -------
