@@ -16,28 +16,20 @@ abstract class AbstractBusType extends AbstractType
      */
     private $bus;
 
-    /**
-     * @param Bus $bus
-     */
     public function __construct(Bus $bus)
     {
         $this->bus = $bus;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use ($options) {
-            $this->handle($event, $options['data']);
-        });
+        if (isset($options['data'])) {
+            $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use ($options) {
+                $this->handle($event, $options['data']);
+            });
+        }
     }
 
-    /**
-     * @param FormEvent $event
-     * @param mixed     $command
-     */
     public function handle(FormEvent $event, $command)
     {
         if (!$event->getForm()->isValid()) {
