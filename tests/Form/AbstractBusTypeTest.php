@@ -7,7 +7,7 @@ use PUGX\BusFormBundle\Tests\BusFormTypeStub;
 
 class AbstractBusTypeTest extends TestCase
 {
-    public function testBuildForm()
+    public function testBuildForm(): void
     {
         $bus = $this->getMockBuilder('SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware')->disableOriginalConstructor()->getMock();
         $builder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')->disableOriginalConstructor()->getMock();
@@ -18,7 +18,7 @@ class AbstractBusTypeTest extends TestCase
         $type->buildForm($builder, ['data' => 'Foo']);
     }
 
-    public function testHandleValidForm()
+    public function testHandleValidForm(): void
     {
         $bus = $this->getMockBuilder('SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware')->disableOriginalConstructor()->getMock();
         $event = $this->getMockBuilder('Symfony\Component\Form\FormEvent')->disableOriginalConstructor()->getMock();
@@ -33,7 +33,7 @@ class AbstractBusTypeTest extends TestCase
         $type->handle($event, $fooCommand);
     }
 
-    public function testHandleInvalidForm()
+    public function testHandleInvalidForm(): void
     {
         $bus = $this->getMockBuilder('SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware')->disableOriginalConstructor()->getMock();
         $event = $this->getMockBuilder('Symfony\Component\Form\FormEvent')->disableOriginalConstructor()->getMock();
@@ -48,7 +48,7 @@ class AbstractBusTypeTest extends TestCase
         $type->handle($event, $fooCommand);
     }
 
-    public function testHandleException()
+    public function testHandleException(): void
     {
         $bus = $this->getMockBuilder('SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware')->disableOriginalConstructor()->getMock();
         $event = $this->getMockBuilder('Symfony\Component\Form\FormEvent')->disableOriginalConstructor()->getMock();
