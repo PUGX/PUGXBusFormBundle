@@ -5,7 +5,7 @@ namespace PUGX\BusFormBundle\Tests\Form\Type;
 use PHPUnit\Framework\TestCase;
 use PUGX\BusFormBundle\Tests\BusFormTypeStub;
 
-class AbstractBusTypeTest extends TestCase
+final class AbstractBusTypeTest extends TestCase
 {
     public function testBuildForm(): void
     {
@@ -25,8 +25,8 @@ class AbstractBusTypeTest extends TestCase
         $form = $this->getMockBuilder('Symfony\Component\Form\FormInterface')->getMock();
         $fooCommand = new \stdClass();
 
-        $event->expects($this->once())->method('getForm')->will($this->returnValue($form));
-        $form->expects($this->once())->method('isValid')->will($this->returnValue(true));
+        $event->expects($this->once())->method('getForm')->willReturn($form);
+        $form->expects($this->once())->method('isValid')->willReturn(true);
         $bus->expects($this->once())->method('handle');
 
         $type = new BusFormTypeStub($bus);
@@ -40,8 +40,8 @@ class AbstractBusTypeTest extends TestCase
         $form = $this->getMockBuilder('Symfony\Component\Form\FormInterface')->getMock();
         $fooCommand = new \stdClass();
 
-        $event->expects($this->once())->method('getForm')->will($this->returnValue($form));
-        $form->expects($this->once())->method('isValid')->will($this->returnValue(false));
+        $event->expects($this->once())->method('getForm')->willReturn($form);
+        $form->expects($this->once())->method('isValid')->willReturn(false);
         $bus->expects($this->never())->method('handle');
 
         $type = new BusFormTypeStub($bus);
@@ -55,8 +55,8 @@ class AbstractBusTypeTest extends TestCase
         $form = $this->getMockBuilder('Symfony\Component\Form\FormInterface')->getMock();
         $fooCommand = new \stdClass();
 
-        $event->expects($this->exactly(2))->method('getForm')->will($this->returnValue($form));
-        $form->expects($this->once())->method('isValid')->will($this->returnValue(true));
+        $event->expects($this->exactly(2))->method('getForm')->willReturn($form);
+        $form->expects($this->once())->method('isValid')->willReturn(true);
         $form->expects($this->once())->method('addError');
         $bus->expects($this->once())->method('handle')->will($this->throwException(new \DomainException()));
 
