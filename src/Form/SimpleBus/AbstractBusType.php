@@ -1,6 +1,6 @@
 <?php
 
-namespace PUGX\BusFormBundle\Form;
+namespace PUGX\BusFormBundle\Form\SimpleBus;
 
 use SimpleBus\Message\Bus\MessageBus as Bus;
 use Symfony\Component\Form\AbstractType;
@@ -21,6 +21,10 @@ abstract class AbstractBusType extends AbstractType
         $this->bus = $bus;
     }
 
+    /**
+     * @param FormBuilderInterface<AbstractType> $builder
+     * @param array<string, mixed>               $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if (isset($options['data'])) {
@@ -30,14 +34,14 @@ abstract class AbstractBusType extends AbstractType
         }
     }
 
-    public function handle(FormEvent $event, $command): void
+    public function handle(FormEvent $event, object $command): void
     {
         if (!$event->getForm()->isValid()) {
             return;
         }
         try {
             $this->bus->handle($command);
-        } catch (\DomainException $exception) {
+        } catch (\DomainException | \InvalidArgumentException $exception) {
             $event->getForm()->addError(new FormError($exception->getMessage()));
         }
     }

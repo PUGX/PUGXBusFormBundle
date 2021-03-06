@@ -7,31 +7,17 @@ PUGXBusFormBundle Documentation
 $ composer require pugx/bus-form-bundle
 ```
 
-You likey want to install [SymfonyBridge](https://github.com/SimpleBus/SymfonyBridge).
+You also need to require `simple-bus/message-bus` or `symfony/messenger`.
 
 ## 2. Configuration
 
-If you don't use Flex, you'll need to enable the bundle in the kernel:
-
-``` php
-<?php
-// app/AppKernel.php
-
-public function registerBundles()
-{
-    $bundles = [
-        // ...
-        new SimpleBus\SymfonyBridge\SimpleBusCommandBusBundle(),
-        new PUGX\BusFormBundle\PUGXBusFormBundle(),
-    ];
-}
-```
+No configuration is needed. Flex is taking care of that for you.
 
 ## 3. Usage
 
-In your forms that are bound to a Command, extends bundle's form instead of Symfony one.
+In your forms that are bound to a Command, extends one of bundle's forms instead of Symfony one.
 
-Example:
+Example with SimpleBus (usage with Messenger is pretty similar):
 
 ```php
 <?php
@@ -39,14 +25,15 @@ Example:
 namespace App\Form;
 
 use MyDomain\Command\DoSomethingCommand;
-use PUGX\BusFormBundle\AbstractBusType;
+use PUGX\BusFormBundle\SimpleBus\AbstractBusType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class FooType extends AbstractBusType
+final class FooType extends AbstractBusType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // it's very important to call parent constructor, otherwise this won't work!
         parent::buildForm($builder, $options);
         $builder
             ->add('bar')
@@ -63,18 +50,18 @@ class FooType extends AbstractBusType
 }
 ```
 
-If you don't use autowiring, you'll need to declare your form as a service, injecting the `command_bus` service.
+If you don't use autowiring, you'll need to declare your form as a service, injecting the proper service.
 
 ```yaml
-# app/config/services.yml
+# config/services.yaml
 
-app.form.foo:
-    class: App\Form\FooType
-    arguments: ['@command_bus']
+App\Form\FooType:
+    arguments: ['@command_bus'] # or ['@Symfony\Component\Messenger\MessageBusInterface']
     tags: [form.type]
 ```
 
-Now, your controller doesn't need to handle the Command any more. The Command is handled by the form.
+Now, your controller doesn't need to handle/dispatch the Command any more.
+The Command is handled/dispatched by the form.
 
 Example:
 
@@ -86,7 +73,7 @@ use MyDomain\Command\DoSomethingCommand;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
-class FooController extends AbstractController
+final class FooController extends AbstractController
 {
     // before
     public function doSomethingAction(Request $request)
@@ -116,8 +103,8 @@ class FooController extends AbstractController
 
 ```
 
-Also, if your handler is throwing a `\DomainException`, such exception is caught and transformed
-into a form error.
+Also, if your handler is throwing a `\DomainException` or an `\InvalidArgumentException`, such exceptions
+are caught and transformed into a form error (and logged as well).
 
 
 ## 4. Direct use
@@ -132,16 +119,16 @@ If you don't use autowiring, you'll need to declare `BusType` as a service (only
 ```yaml
 # config/services.yaml
 
-PUGX\BusFormBundle\Form\BusType: ~
+PUGX\BusFormBundle\Form\SimpleBus\BusType: ~
 ```
 
 Or, if you still old system (not autowired/autoconfigured):
 
 ```yaml
-# app/config/services.yml
+# config/services.yaml
 
 app.form.baz:
-    class: PUGX\BusFormBundle\Form\BusType
+    class: PUGX\BusFormBundle\Form\SimpleBus\BusType
     arguments: ['@command_bus']
     tags: [form.type]
 ```
@@ -155,7 +142,7 @@ use PUGX\BusFormBundle\Form\BusType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
-class FooController extends AbstractController
+final class FooController extends AbstractController
 {
     public function doSomethingAction(Request $request)
     {
