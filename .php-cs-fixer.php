@@ -5,7 +5,7 @@ $finder = PhpCsFixer\Finder::create()
     ->in([__DIR__.'/src', __DIR__.'/tests'])
 ;
 
-return PhpCsFixer\Config::create()
+return (new PhpCsFixer\Config())
     ->setRiskyAllowed(true)
     ->setRules([
         '@Symfony' => true,
@@ -14,7 +14,7 @@ return PhpCsFixer\Config::create()
         '@PHPUnit75Migration:risky' => true,
         'ordered_imports' => true,
         'declare_strict_types' => false,
-        'native_function_invocation' => true,
+        'native_function_invocation' => ['include' => ['@all']],
     ])
     ->setFinder($finder)
 ;
