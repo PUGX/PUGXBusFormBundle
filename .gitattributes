@@ -2,6 +2,7 @@
 /.php-cs-fixer.*  export-ignore
 /CHANGELOG.md     export-ignore
 /docs/            export-ignore
+/phpstan*.neon    export-ignore
 /phpunit.xml.dist export-ignore
 /LICENSE          export-ignore
 /README.md        export-ignore

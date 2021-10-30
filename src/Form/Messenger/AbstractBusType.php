@@ -46,7 +46,7 @@ abstract class AbstractBusType extends AbstractType
             $prev = $exception->getPrevious();
             if ($prev instanceof \DomainException || $prev instanceof \InvalidArgumentException) {
                 $event->getForm()->addError(new FormError($prev->getMessage()));
-            } else {
+            } elseif (null !== $prev) {
                 throw $prev;
             }
         } catch (\DomainException | \InvalidArgumentException $exception) {
