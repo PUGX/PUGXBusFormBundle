@@ -41,8 +41,8 @@ abstract class AbstractBusType extends AbstractType
         }
         try {
             $this->bus->handle($command);
-        } catch (\DomainException | \InvalidArgumentException $exception) {
-            $event->getForm()->addError(new FormError($exception->getMessage()));
+        } catch (\DomainException|\InvalidArgumentException $exception) {
+            $event->getForm()->addError(new FormError($exception->getMessage(), null, [], null, $exception));
         }
     }
 }
