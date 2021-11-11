@@ -19,7 +19,7 @@ final class AbstractBusTypeTest extends TestCase
         $builder->expects(self::once())->method('addEventListener');
 
         $type = new BusFormTypeStub($bus);
-        $type->buildForm($builder, ['data' => 'Foo']);
+        $type->buildForm($builder, ['data' => new \stdClass()]);
     }
 
     public function testHandleValidForm(): void
