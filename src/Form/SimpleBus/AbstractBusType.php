@@ -11,10 +11,7 @@ use Symfony\Component\Form\FormEvents;
 
 abstract class AbstractBusType extends AbstractType
 {
-    /**
-     * @var Bus
-     */
-    private $bus;
+    private Bus $bus;
 
     public function __construct(Bus $bus)
     {
