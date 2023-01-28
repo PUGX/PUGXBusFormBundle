@@ -6,7 +6,7 @@ on:
 
 jobs:
     phpstan:
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-22.04
         name: PHPStan
         steps:
             - name: Checkout
@@ -18,7 +18,7 @@ jobs:
               with:
                   args: analyse
     cs-fixer:
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-22.04
         name: PHP-CS-Fixer
         steps:
             - name: Checkout
@@ -26,7 +26,7 @@ jobs:
             - name: Fix CS
               uses: docker://oskarstark/php-cs-fixer-ga
     tests:
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-22.04
         strategy:
             matrix:
                 php:
@@ -51,7 +51,7 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v3
             - name: Cache
-              uses: actions/cache@v2
+              uses: actions/cache@v3
               with: 
                   path: ~/.composer/cache/files
                   key: ${{ matrix.php }}-${{ matrix.symfony }}-${{ matrix.composer_option }} 
