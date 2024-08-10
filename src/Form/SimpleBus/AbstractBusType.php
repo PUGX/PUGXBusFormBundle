@@ -21,7 +21,7 @@ abstract class AbstractBusType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        if (isset($options['data']) && is_object($options['data'])) {
+        if (isset($options['data']) && \is_object($options['data'])) {
             $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use ($options): void {
                 $this->handle($event, $options['data']);
             });
