@@ -30,19 +30,18 @@ jobs:
         strategy:
             matrix:
                 php:
-                    - '8.1'
                     - '8.2'
                     - '8.3'
                 include:
                     - description: 'Lowest'
-                      php: '8.1'
+                      php: '8.2'
                       composer_option: '--prefer-lowest'
                     - description: 'Symfony 6.4'
                       php: '8.2'
                       symfony: 6.4.*
-                    - description: 'Symfony 7.0'
+                    - description: 'Symfony 7.1'
                       php: '8.3'
-                      symfony: 7.0.*
+                      symfony: 7.1.*
         name: PHP ${{ matrix.php }} tests (${{ matrix.description }})
         steps:
             - name: Checkout
