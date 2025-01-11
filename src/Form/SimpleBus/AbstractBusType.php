@@ -11,14 +11,10 @@ use Symfony\Component\Form\FormEvents;
 
 abstract class AbstractBusType extends AbstractType
 {
-    public function __construct(private Bus $bus)
+    public function __construct(private readonly Bus $bus)
     {
     }
 
-    /**
-     * @param FormBuilderInterface<AbstractType> $builder
-     * @param array<string, mixed>               $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if (isset($options['data']) && \is_object($options['data'])) {

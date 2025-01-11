@@ -14,10 +14,10 @@ final class AbstractBusTypeTest extends TestCase
 {
     public function testBuildForm(): void
     {
-        $bus = $this->getMockBuilder(MessageBusInterface::class)->disableOriginalConstructor()->getMock();
-        $builder = $this->getMockBuilder(FormBuilder::class)->disableOriginalConstructor()->getMock();
+        $bus = $this->createMock(MessageBusInterface::class);
+        $builder = $this->createMock(FormBuilder::class);
 
-        $builder->expects(self::once())->method('addEventListener');
+        $builder->expects($this->once())->method('addEventListener');
 
         $type = new BusFormTypeMessengerStub($bus);
         $type->buildForm($builder, ['data' => new \stdClass()]);
@@ -25,14 +25,14 @@ final class AbstractBusTypeTest extends TestCase
 
     public function testHandleValidForm(): void
     {
-        $bus = $this->getMockBuilder(MessageBusInterface::class)->disableOriginalConstructor()->getMock();
-        $event = $this->getMockBuilder(FormEvent::class)->disableOriginalConstructor()->getMock();
-        $form = $this->getMockBuilder(FormInterface::class)->getMock();
+        $bus = $this->createMock(MessageBusInterface::class);
+        $event = $this->createMock(FormEvent::class);
+        $form = $this->createMock(FormInterface::class);
         $fooCommand = new \stdClass();
 
-        $event->expects(self::once())->method('getForm')->willReturn($form);
-        $form->expects(self::once())->method('isValid')->willReturn(true);
-        $bus->expects(self::once())->method('dispatch')->willReturn(new Envelope($fooCommand));
+        $event->expects($this->once())->method('getForm')->willReturn($form);
+        $form->expects($this->once())->method('isValid')->willReturn(true);
+        $bus->expects($this->once())->method('dispatch')->willReturn(new Envelope($fooCommand));
 
         $type = new BusFormTypeMessengerStub($bus);
         $type->handle($event, $fooCommand);
@@ -40,14 +40,14 @@ final class AbstractBusTypeTest extends TestCase
 
     public function testHandleInvalidForm(): void
     {
-        $bus = $this->getMockBuilder(MessageBusInterface::class)->disableOriginalConstructor()->getMock();
-        $event = $this->getMockBuilder(FormEvent::class)->disableOriginalConstructor()->getMock();
-        $form = $this->getMockBuilder(FormInterface::class)->getMock();
+        $bus = $this->createMock(MessageBusInterface::class);
+        $event = $this->createMock(FormEvent::class);
+        $form = $this->createMock(FormInterface::class);
         $fooCommand = new \stdClass();
 
-        $event->expects(self::once())->method('getForm')->willReturn($form);
-        $form->expects(self::once())->method('isValid')->willReturn(false);
-        $bus->expects(self::never())->method('dispatch')->willReturn(new Envelope($fooCommand));
+        $event->expects($this->once())->method('getForm')->willReturn($form);
+        $form->expects($this->once())->method('isValid')->willReturn(false);
+        $bus->expects($this->never())->method('dispatch')->willReturn(new Envelope($fooCommand));
 
         $type = new BusFormTypeMessengerStub($bus);
         $type->handle($event, $fooCommand);
@@ -55,15 +55,15 @@ final class AbstractBusTypeTest extends TestCase
 
     public function testHandleException(): void
     {
-        $bus = $this->getMockBuilder(MessageBusInterface::class)->disableOriginalConstructor()->getMock();
-        $event = $this->getMockBuilder(FormEvent::class)->disableOriginalConstructor()->getMock();
-        $form = $this->getMockBuilder(FormInterface::class)->getMock();
+        $bus = $this->createMock(MessageBusInterface::class);
+        $event = $this->createMock(FormEvent::class);
+        $form = $this->createMock(FormInterface::class);
         $fooCommand = new \stdClass();
 
-        $event->expects(self::exactly(2))->method('getForm')->willReturn($form);
-        $form->expects(self::once())->method('isValid')->willReturn(true);
-        $form->expects(self::once())->method('addError');
-        $bus->expects(self::once())->method('dispatch')->will(self::throwException(new \DomainException()));
+        $event->expects($this->exactly(2))->method('getForm')->willReturn($form);
+        $form->expects($this->once())->method('isValid')->willReturn(true);
+        $form->expects($this->once())->method('addError');
+        $bus->expects($this->once())->method('dispatch')->will($this->throwException(new \DomainException()));
 
         $type = new BusFormTypeMessengerStub($bus);
         $type->handle($event, $fooCommand);
