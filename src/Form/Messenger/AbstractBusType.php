@@ -16,10 +16,6 @@ abstract class AbstractBusType extends AbstractType
     {
     }
 
-    /**
-     * @param FormBuilderInterface<AbstractType> $builder
-     * @param array<string, mixed>               $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if (isset($options['data']) && \is_object($options['data'])) {
