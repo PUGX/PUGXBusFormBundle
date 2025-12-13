@@ -37,6 +37,7 @@ jobs:
                     - '8.2'
                     - '8.3'
                     - '8.4'
+                    - '8.5'
                 include:
                     - description: 'Lowest'
                       php: '8.2'
@@ -49,7 +50,10 @@ jobs:
                       symfony: 7.3.*
                     - description: 'Symfony 7.4'
                       php: '8.4'
-                      symfony: 7.4.*@dev
+                      symfony: 7.4.*
+                    - description: 'Symfony 8.0'
+                      php: '8.5'
+                      symfony: 8.0.*
         name: PHP ${{ matrix.php }} tests (${{ matrix.description }})
         steps:
             - name: Checkout
@@ -62,7 +66,7 @@ jobs:
             - name: Setup flex
               run: |
                   composer global config --no-plugins allow-plugins.symfony/flex true
-                  composer global require --no-interaction --no-progress symfony/flex:^2.8
+                  composer global require --no-interaction --no-progress symfony/flex:^2.10
                   composer config extra.symfony.require ${{ matrix.symfony }}
             - name: Allow dev dependencies
               run: composer config minimum-stability dev && composer config prefer-stable true
