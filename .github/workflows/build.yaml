@@ -12,7 +12,7 @@ jobs:
         name: PHPStan
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v6
             - name: PHPStan
               uses: docker://oskarstark/phpstan-ga
               env:
@@ -24,7 +24,7 @@ jobs:
         name: PHP-CS-Fixer
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v6
             - name: Fix CS
               uses: docker://oskarstark/php-cs-fixer-ga
               with:
@@ -41,13 +41,11 @@ jobs:
                 include:
                     - description: 'Lowest'
                       php: '8.2'
-                      composer_option: '--prefer-lowest'
-                    - description: 'Symfony 6.4'
-                      php: '8.2'
                       symfony: 6.4.*
-                    - description: 'Symfony 7.3'
+                      dependencies: lowest
+                    - description: 'Symfony 6.4'
                       php: '8.3'
-                      symfony: 7.3.*
+                      symfony: 6.4.*
                     - description: 'Symfony 7.4'
                       php: '8.4'
                       symfony: 7.4.*
@@ -57,22 +55,17 @@ jobs:
         name: PHP ${{ matrix.php }} tests (${{ matrix.description }})
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v6
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php }}
                   tools: flex
-            - name: Setup flex
-              run: |
-                  composer global config --no-plugins allow-plugins.symfony/flex true
-                  composer global require --no-interaction --no-progress symfony/flex:^2.10
-                  composer config extra.symfony.require ${{ matrix.symfony }}
             - name: Allow dev dependencies
               run: composer config minimum-stability dev && composer config prefer-stable true
               if: contains(matrix.symfony, '@dev')
             - name: Install dependencies
-              uses: ramsey/composer-install@v2
+              uses: ramsey/composer-install@v3
               with:
                   dependency-versions: ${{ matrix.dependencies }}
               env:
