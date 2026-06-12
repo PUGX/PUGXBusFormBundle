@@ -1,7 +1,8 @@
 # PUGXBusFormBundle
 
-This bundle provides a mechanism to automatically manage commands in forms with a command bus
-(SimpleBus or Symfony Messenger).
+This bundle provides a mechanism to automatically manage commands in forms with Symfony Messenger.
+
+Older versions of this bundle also support SimpleBus.
 
 The original idea is explained in [this issue](https://github.com/SimpleBus/SymfonyBridge/issues/38#issuecomment-264205865).
 

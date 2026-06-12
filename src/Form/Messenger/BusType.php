@@ -1,6 +1,6 @@
 <?php
 
-namespace PUGX\BusFormBundle\Form\SimpleBus;
+namespace PUGX\BusFormBundle\Form\Messenger;
 
 final class BusType extends AbstractBusType
 {
